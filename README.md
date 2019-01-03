@@ -7,6 +7,7 @@ This is the Wirteup of web of csaw-ctf-2016-quals
 
 首先通过上面链接的Writeups里的工具和思路下载得到源码。
 主要是index.php源码。
+```
 <?php
 
 if (isset($_GET['page'])) {
@@ -24,7 +25,7 @@ assert("strpos('$file', '..') === false") or die("Detected hacking attempt!");
 assert("file_exists('$file')") or die("That file doesn't exist!");
 
 ?>
-
+```
 下载到的源码应该是历史版本，所以flag.php中没有给出flag值。
 从index.php里可以看出，虽然有require_once $file可以用来包含flag.php，但因为flag是被注释掉的，我们也看不到。
 代码中有assert()函数，应该很敏感地想到要利用它来执行任意命令，从而拿到flag。
