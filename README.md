@@ -3,6 +3,12 @@ This is the Wirteup of web of csaw-ctf-2016-quals
 
 通过 《write-ups-2016》 repository 中链接的几个Writeups可以看到解题方法https://github.com/ctfs/write-ups-2016/tree/master/csaw-ctf-2016-quals/web/mfw
 
+这里是比较好的两个Writeup的链接：
+
+https://github.com/xPowerz/CTF-Writeups/tree/master/2016/CSAW/mfw
+
+https://github.com/ernw/ctf-writeups/tree/master/csaw2016/mfw
+
 这里是另外一些解题思路和备份。
 
 首先通过上面链接的Writeups里的工具和思路下载得到源码。
