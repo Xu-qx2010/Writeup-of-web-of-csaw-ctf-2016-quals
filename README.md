@@ -29,12 +29,16 @@ assert("file_exists('$file')") or die("That file doesn't exist!");
 从index.php里可以看出，虽然有require_once $file可以用来包含flag.php，但因为flag是被注释掉的，我们也看不到。
 代码中有assert()函数，应该很敏感地想到要利用它来执行任意命令，从而拿到flag。
 
+
 观察可以发现，page传入的参数存在代码注入漏洞，顺便提一下assert()函数会把传入的字符串当做php代码来执行。
 
 注入思路：整体上可以注释掉', '..') === false，或者不注释，只在中间插入。另外要注意闭合单引号和括号。
 
+
 中间插入型，使用 . 连接符：
+
 查看目录：?page=flag'.system("ls").'
+
 ![image]
 
 
